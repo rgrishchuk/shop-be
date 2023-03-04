@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/extensions
 import { BOOKS } from './books.js';
 
 export const handler = async () => ({

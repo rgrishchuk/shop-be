@@ -102,5 +102,5 @@ export const BOOKS = [
     website: 'https://doi.org/10.1007/978-1-4842-4221-6',
     price: 28.51,
     count: 15,
-  }
-]
+  },
+];

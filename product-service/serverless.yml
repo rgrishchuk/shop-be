@@ -25,6 +25,22 @@ provider:
   runtime: nodejs14.x
   stage: dev
   region: eu-west-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:DescribeTable
+      Resource:
+        - "arn:aws:dynamodb:eu-west-1:720133763777:table/products"
+        - "arn:aws:dynamodb:eu-west-1:720133763777:table/stocks"
+  environment:
+    PRODUCTS_TABLE_NAME: products
+    STOCKS_TABLE_NAME: stocks
 
 # you can add statements to the Lambda function's IAM Role here
 #  iam:
@@ -69,6 +85,12 @@ functions:
       - http:
           path: products/{productId}
           method: get
+  createProduct:
+    handler: createProduct.handler
+    events:
+      - http:
+          path: /products
+          method: post
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

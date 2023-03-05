@@ -1,6 +1,6 @@
 export const BOOKS = [
   {
-    id: '1',
+    image: '1',
     title: 'Eloquent JavaScript, Third Edition',
     subtitle: 'A Modern Introduction to Programming',
     author: 'Marijn Haverbeke',
@@ -13,7 +13,7 @@ export const BOOKS = [
     count: 5,
   },
   {
-    id: '2',
+    image: '2',
     title: 'Practical Modern JavaScript',
     subtitle: 'Dive into ES6 and the Future of JavaScript',
     author: 'Nicolás Bevacqua',
@@ -26,7 +26,7 @@ export const BOOKS = [
     count: 3,
   },
   {
-    id: '3',
+    image: '3',
     title: 'Understanding ECMAScript 6',
     subtitle: 'The Definitive Guide for JavaScript Developers',
     author: 'Nicholas C. Zakas',
@@ -39,7 +39,7 @@ export const BOOKS = [
     count: 7,
   },
   {
-    id: '4',
+    image: '4',
     title: 'Speaking JavaScript',
     subtitle: 'An In-Depth Guide for Programmers',
     author: 'Axel Rauschmayer',
@@ -52,7 +52,7 @@ export const BOOKS = [
     count: 10,
   },
   {
-    id: '5',
+    image: '5',
     title: 'Learning JavaScript Design Patterns',
     subtitle: "A JavaScript and jQuery Developer's Guide",
     author: 'Addy Osmani',
@@ -65,7 +65,7 @@ export const BOOKS = [
     count: 1,
   },
   {
-    id: '6',
+    image: '6',
     title: "You Don't Know JS Yet",
     subtitle: 'Get Started',
     author: 'Kyle Simpson',
@@ -78,7 +78,7 @@ export const BOOKS = [
     count: 7,
   },
   {
-    id: '7',
+    image: '7',
     title: 'Pro Git',
     subtitle: 'Everything you neeed to know about Git',
     author: 'Scott Chacon and Ben Straub',
@@ -91,7 +91,7 @@ export const BOOKS = [
     count: 3,
   },
   {
-    id: '8',
+    image: '8',
     title: 'Rethinking Productivity in Software Engineering',
     subtitle: '',
     author: 'Caitlin Sadowski, Thomas Zimmermann',

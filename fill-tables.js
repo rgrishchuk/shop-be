@@ -2,7 +2,7 @@ import AWS from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 
 // eslint-disable-next-line import/extensions
-import { BOOKS } from './product-service/books.js';
+import { BOOKS } from './books.js';
 
 // Set the region
 AWS.config.update({ region: 'eu-west-1' });

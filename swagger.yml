@@ -1,0 +1,102 @@
+openapi: 3.0.3
+info:
+  title: My Serverless API
+  description: My API description
+  version: 1.0.0
+servers:
+  - url: https://cjuy3nd54e.execute-api.eu-west-1.amazonaws.com/dev
+tags:
+  - name: books
+    description: Books for sale
+paths:
+  /products/{productId}:
+    get:
+      tags:
+        - books
+      summary: Get a book by ID
+      description: Retrieve a specific book by its ID.
+      operationId: getProductsById
+      parameters:
+        - name: productId
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'          
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /products:
+    get:
+      tags:
+        - books
+      summary: Get all books
+      description: Retrieve books.
+      operationId: getProductsList
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 10
+        title:
+          type: string
+          example: Eloquent JavaScript, Third Edition
+        subtitle:
+          type: string
+          example: A Modern Introduction to Programming
+        author: 
+          type: string
+          example: Marijn Haverbeke
+        published:
+          type: string
+          example: '2018-12-04T00:00:00.000Z'
+        publisher: 
+          type: string
+          example: No Starch Press
+        pages: 
+          type: integer
+          format: int32
+          example: 472
+        description:
+          type: string
+          example: JavaScript lies at the heart of almost every modern web application, from social apps like Twitter to browser-based game frameworks like Phaser and Babylon. Though simple for beginners to pick up and play with, JavaScript is a flexible, complex language that you can use to build full-scale applications.
+        website: 
+          type: string
+          example: http://eloquentjavascript.net/
+        price: 
+          type: number
+          format: float
+          example: 20.11
+        counter:
+          type: integer
+          format: int32
+          example: 7
+    ApiResponse:
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string

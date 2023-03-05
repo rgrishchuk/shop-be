@@ -1,0 +1,18 @@
+{
+  "root": true,
+  "extends": [
+    "airbnb-base",
+    "eslint:recommended",
+    "plugin:jest/recommended"
+  ],
+  "plugins": [
+    "import",
+    "jest"
+  ],
+  "rules": {
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "import/no-relative-parent-imports": "off",
+    "import/no-relative-packages": "off"
+  }
+}

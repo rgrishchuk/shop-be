@@ -1,0 +1,44 @@
+service: import-service
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: eu-west-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:ListBucket"
+      Resource: "arn:aws:s3:::my-shop-books"
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource: "arn:aws:s3:::my-shop-books/*"
+  environment:
+    BUCKET: my-shop-books
+
+functions:
+  importProductsFile:
+    handler: handler.importProductsFile
+    events:
+      - http:
+          path: import
+          method: get
+          request:
+            parameters:
+              querystrings:
+                name: true
+          cors: true
+  importFileParser:
+    handler: handler.importFileParser
+    events:
+      - s3:
+          bucket: my-shop-books
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploaded/
+          existing: true
+
+package:
+  exclude:
+    - __tests__/**

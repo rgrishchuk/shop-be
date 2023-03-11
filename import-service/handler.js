@@ -37,7 +37,19 @@ module.exports = {
     };
 
     const parse = (stream) => new Promise((resolve, reject) => {
-      stream.on('data', (data) => console.log('Record:', data));
+      const sqs = new AWS.SQS();
+      stream.on('data', (data) => {
+        sqs.sendMessage({
+          QueueUrl: process.env.SQS_URL,
+          MessageBody: JSON.stringify(data),
+        }, (err) => {
+          if (err) {
+            console.log(`Error sending message to SQS: ${err}`);
+          } else {
+            console.log(`Record sent to SQS: ${JSON.stringify(data)}`);
+          }
+        });
+      });
       stream.on('error', (error) => {
         console.log(error);
         reject();

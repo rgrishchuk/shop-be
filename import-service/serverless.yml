@@ -14,8 +14,13 @@ provider:
       Action:
         - "s3:*"
       Resource: "arn:aws:s3:::my-shop-books/*"
+    - Effect: "Allow"
+      Action:
+        - "sqs:SendMessage"
+      Resource: "arn:aws:sqs:eu-west-1:720133763777:catalogItemsQueue"
   environment:
     BUCKET: my-shop-books
+    SQS_URL: "https://sqs.eu-west-1.amazonaws.com/720133763777/catalogItemsQueue"
 
 functions:
   importProductsFile:

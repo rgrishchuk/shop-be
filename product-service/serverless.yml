@@ -35,12 +35,23 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
         - dynamodb:DescribeTable
+        - dynamodb:BatchWriteItem
       Resource:
         - "arn:aws:dynamodb:eu-west-1:720133763777:table/products"
         - "arn:aws:dynamodb:eu-west-1:720133763777:table/stocks"
+    - Effect: Allow
+      Action:
+        - sns:Publish
+      Resource: !Ref createProductTopic
+    - Effect: Allow
+      Action:
+        - sqs:ReceiveMessage
+        - sqs:DeleteMessage
+      Resource: !GetAtt catalogItemsQueue.Arn
   environment:
     PRODUCTS_TABLE_NAME: products
     STOCKS_TABLE_NAME: stocks
+    PRODUCTS_SNS_TOPIC_ARN: !Ref createProductTopic
 
 # you can add statements to the Lambda function's IAM Role here
 #  iam:
@@ -91,7 +102,13 @@ functions:
       - http:
           path: /products
           method: post
-#    The following are a few example events you can configure
+  catalogBatchProcess:
+    handler: catalogBatchProcess.handler
+    events:
+      - sqs:
+          batchSize: 5
+          arn: !GetAtt catalogItemsQueue.Arn
+
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
 #    events:
@@ -142,6 +159,38 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+resources:
+  Resources:
+    catalogItemsQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: catalogItemsQueue
+    createProductTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: Create Product Topic
+        TopicName: createProductTopic
+    snsSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Protocol: email
+        TopicArn:
+          Ref: createProductTopic
+        Endpoint: rusgrishchuk@gmail.com
+        FilterPolicy:
+          price:
+            - {"numeric": [">", 50 ]}
+    snsSubscriptionLowPrice:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Protocol: email
+        TopicArn:
+          Ref: createProductTopic
+        Endpoint: Ruslan_Hryshchuk@epam.com
+        FilterPolicy:
+          price:
+            - { "numeric": [ "<=", 50 ] }
+
 package:
   exclude:
     - __tests__/**

@@ -1,0 +1,19 @@
+service: authorization-service
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: eu-west-1
+
+functions:
+  basicAuthorizer:
+    handler: handler.basicAuthorizer
+    events:
+      - http:
+          path: /auth
+          method: get
+          cors: true
+
+plugins:
+  - serverless-dotenv-plugin
